@@ -1,25 +1,29 @@
 package ru.hogwarts.school.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Faculty{
+public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long facultyId;
     private String name;
     private String color;
 
-    public Long getId() {
-        return id;
+    @OneToMany(mappedBy = "faculty")
+    private Collection<Student> students;
+
+    public Faculty() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Long facultyId) {
+        this.facultyId = facultyId;
     }
 
     public String getName() {
@@ -38,23 +42,31 @@ public class Faculty{
         this.color = color;
     }
 
+    public Collection<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return Objects.equals(id, faculty.id) && Objects.equals(name, faculty.name) && Objects.equals(color, faculty.color);
+        return Objects.equals(facultyId, faculty.facultyId) && Objects.equals(name, faculty.name) && Objects.equals(color, faculty.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, color);
+        return Objects.hash(facultyId, name, color);
     }
 
     @Override
     public String toString() {
         return "Faculty{" +
-                "id=" + id +
+                "id=" + facultyId +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
                 '}';

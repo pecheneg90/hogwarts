@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -37,11 +38,6 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @GetMapping("/sort/{studentAge}")
-    public ResponseEntity<Collection<Student>> sortAllStudentsWithAge(@PathVariable int studentAge) {
-        return ResponseEntity.ok(studentService.sortAllStudentsWithAge(studentAge));
-    }
-
     @PutMapping()
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student updatedStudent = studentService.updateStudent(student);
@@ -55,5 +51,28 @@ public class StudentController {
     public ResponseEntity<Student> deleteStudent(@PathVariable Long studentId) {
         studentService.deleteStudent(studentId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/sort/{studentAge}")
+    public ResponseEntity<Collection<Student>> sortAllStudentsWithAge(@PathVariable int studentAge) {
+        return ResponseEntity.ok(studentService.sortAllStudentsWithAge(studentAge));
+    }
+
+    @GetMapping("/find/{min},{max}")
+    public ResponseEntity<Collection<Student>> findByAgeBetween(@PathVariable int min, @PathVariable int max) {
+        Collection<Student> findByAgeBetween = studentService.findByAgeBetween(min, max);
+        if (findByAgeBetween.isEmpty() || min < max) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(findByAgeBetween);
+    }
+
+    @GetMapping("/faculty/{id}")
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
+        Faculty getFaculty = studentService.getFacultyToFaculty(id);
+        if (getFaculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(getFaculty);
     }
 }
