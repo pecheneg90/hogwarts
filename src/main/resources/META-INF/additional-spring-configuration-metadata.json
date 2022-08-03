@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "path.to.avatars.folder",
+      "type": "java.lang.String",
+      "description": "Description for path.to.avatars.folder."
+  }
+] }
