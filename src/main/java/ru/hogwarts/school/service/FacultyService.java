@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -7,7 +8,6 @@ import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-
 @Service
 public class FacultyService {
 
