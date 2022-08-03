@@ -9,6 +9,10 @@ select name from student;
 
 select *
 from student
+where name LIKE '%e%';
+
+select *
+from student
 where id > student.age;
 
 select *
