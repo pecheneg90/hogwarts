@@ -9,7 +9,8 @@ select name from student;
 
 select *
 from student
-where name LIKE '%e%';
+where name LIKE '%e%'
+and name LIKE  '%s%';
 
 select *
 from student
