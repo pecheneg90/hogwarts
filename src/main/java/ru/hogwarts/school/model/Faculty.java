@@ -7,13 +7,23 @@ import java.util.Objects;
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long facultyId;
     private String name;
     private String color;
 
     @OneToMany(mappedBy = "faculty")
     private Collection<Student> students;
+
+    public Faculty(long id, String name, String color) {
+    }
+
+    public Faculty(Long facultyId, String name, String color, Collection<Student> students) {
+        this.facultyId = facultyId;
+        this.name = name;
+        this.color = color;
+        this.students = students;
+    }
 
     public Faculty() {
     }

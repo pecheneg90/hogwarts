@@ -6,16 +6,23 @@ import java.util.Objects;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String name;
     private int age;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
     public Student() {
+    }
+
+    public Student(Long id, String name, int age, Faculty faculty) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.faculty = faculty;
     }
 
     public Long getId() {
