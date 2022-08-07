@@ -9,7 +9,7 @@ import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
 
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 @RestController
 public class FacultyController {
     private final FacultyService facultyService;
@@ -70,8 +70,8 @@ public class FacultyController {
     }
 
     @GetMapping("/students/{id}")
-    public ResponseEntity<Collection<Student>> getStudents(@PathVariable Long id) {
-        Collection<Student> students = facultyService.getStudentsToFaculty(id);
+    public ResponseEntity<Collection<Student>> findStudentsByFaculty(@PathVariable Long id) {
+        Collection<Student> students = facultyService.findStudentsByFaculty(id);
         if (students == null) {
             return ResponseEntity.notFound().build();
         }
