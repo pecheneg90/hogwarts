@@ -47,11 +47,11 @@ public class StudentService {
         return studentRepository.findByAgeBetween(min, max);
     }
 
-    public Integer quantityOfStudents() {
+    public Double quantityOfStudents() {
         return studentRepository.quantityOfStudents();
     }
 
-    public Integer averageAgeOfStudents() {
+    public Double averageAgeOfStudents() {
         return studentRepository.averageAgeOfStudents();
     }
 

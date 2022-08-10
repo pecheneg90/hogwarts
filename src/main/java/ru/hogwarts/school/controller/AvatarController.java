@@ -56,7 +56,7 @@ public class AvatarController {
     }
 
     @GetMapping(params = {"page", "size"})
-    public List<Avatar> getAvatarPage(@RequestParam int page, int size) {
+    public List<Avatar> getAvatarPage(@RequestParam int page, @RequestParam int size) {
         return avatarService.getAvatarOnPage(page, size);
     }
 }
