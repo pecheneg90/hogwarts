@@ -58,4 +58,13 @@ public class Faculty {
         this.color = color;
     }
 
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "facultyId=" + facultyId +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", students=" + students +
+                '}';
+    }
 }
