@@ -65,11 +65,12 @@ public class FacultyService {
         return facultyRepository.findById(facultyId).map(Faculty::getStudents).orElse(null);
     }
 
-    public String getLongestFacultyName() {
+    public String getLongestFacultyName() throws Exception {
         logger.info("method has been called - getLongestFacultyName");
         List<Faculty> faculties = facultyRepository.findAll();
         return faculties.stream()
                 .map(Faculty::getName)
-                .max(Comparator.comparing(String::length)).orElseThrow();
+                .max(Comparator.comparing(String::length))
+                .orElseThrow(() -> new Exception("Not found"));
     }
 }

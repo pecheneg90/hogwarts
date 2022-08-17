@@ -79,7 +79,7 @@ public class FacultyController {
     }
 
     @GetMapping("/theLongestName")
-    public String getTheLongestFacultyName (){
+    public String getTheLongestFacultyName () throws Exception {
         return facultyService.getLongestFacultyName();
     }
 }

@@ -77,9 +77,7 @@ public class StudentService {
     public List<String> getStudentsWithFirstLetterA() {
         logger.info("method has been called - first letter A");
         List<Student> students = studentRepository.findAll();
-
         return students.stream().
-                parallel().
                 map(Student::getName).
                 filter(e -> e.startsWith("A")).
                 sorted().
@@ -102,7 +100,7 @@ public class StudentService {
                 limit(1_000_000).
                 parallel().
                 reduce(0, Integer::sum);
-        System.out.println(System.currentTimeMillis() - start);
+        logger.debug("time - {}", start);
         return sum;
     }
 }
