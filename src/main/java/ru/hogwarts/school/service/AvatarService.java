@@ -33,6 +33,7 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
         this.studentRepository = studentRepository;
     }
+
     Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
