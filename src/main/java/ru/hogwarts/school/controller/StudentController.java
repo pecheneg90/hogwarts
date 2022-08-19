@@ -88,12 +88,22 @@ public class StudentController {
     }
 
     @GetMapping("/averageStream")
-    public double getAverageAgeOfStudentsStream(){
+    public double getAverageAgeOfStudentsStream() {
         return studentService.getAverageAgeOfStudents();
     }
 
     @GetMapping("/number")
-    public int getNumber(){
+    public int getNumber() {
         return studentService.getNumber();
+    }
+
+    @GetMapping("/threads")
+    public ResponseEntity<Collection<String>> getStudentNameNotSync() {
+        return studentService.getStudentNameNotSync();
+    }
+
+    @GetMapping("/threadsSync")
+    public ResponseEntity<Collection<String>> getStudentNameSync() {
+        return studentService.getStudentNameSync();
     }
 }

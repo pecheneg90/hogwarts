@@ -2,6 +2,7 @@ package ru.hogwarts.school.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
@@ -15,6 +16,9 @@ import java.util.stream.Stream;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+
+    private int count = 0;
+    private final Object flag = new Object();
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -102,5 +106,62 @@ public class StudentService {
                 reduce(0, Integer::sum);
         logger.debug("time - {}", start);
         return sum;
+    }
+
+    public ResponseEntity<Collection<String>> getStudentNameNotSync() {
+        List<String> students = getStudentNames(studentRepository);
+
+        for (int i = 0; i < 2; i++) {
+            System.out.printf("%s%d.%s%n", "Main thread - ", i, students.get(i));
+        }
+
+        new Thread(() -> {
+            for (int i = 2; i < 4; i++) {
+                System.out.printf("%s%d.%s%n", "First thread - ", i, students.get(i));
+            }
+        }).start();
+
+        new Thread(() -> {
+            for (int i = 5; i < 7; i++) {
+                System.out.printf("%s%d.%s%n", "Second thread - ", i, students.get(i));
+            }
+        }).start();
+        return ResponseEntity.ok(students);
+    }
+
+    public ResponseEntity<Collection<String>> getStudentNameSync() {
+        List<String> students = getStudentNames(studentRepository);
+
+        printNamesOfListSync(students);
+        printNamesOfListSync(students);
+
+        new Thread(() -> {
+            printNamesOfListSync(students);
+            printNamesOfListSync(students);
+
+        }).start();
+
+        new Thread(() -> {
+            printNamesOfListSync(students);
+            printNamesOfListSync(students);
+
+        }).start();
+
+        return ResponseEntity.ok(students);
+    }
+
+    public List<String> getStudentNames(StudentRepository studentRepository) {
+        return studentRepository
+                .findAll()
+                .stream()
+                .map(Student::getName)
+                .collect(Collectors.toList());
+    }
+
+    public void printNamesOfListSync(List<String> students) {
+        System.out.printf("%d.%s%n",count,students.get(count));
+        synchronized (flag) {
+            count++;
+        }
     }
 }
