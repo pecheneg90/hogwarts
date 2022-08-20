@@ -159,8 +159,8 @@ public class StudentService {
     }
 
     public void printNamesOfListSync(List<String> students) {
-        System.out.printf("%d.%s%n",count,students.get(count));
         synchronized (flag) {
+            System.out.printf("%d.%s%n",count,students.get(count));
             count++;
         }
     }
