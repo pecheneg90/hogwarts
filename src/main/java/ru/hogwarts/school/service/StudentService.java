@@ -109,6 +109,7 @@ public class StudentService {
     }
 
     public ResponseEntity<Collection<String>> getStudentNameNotSync() {
+        logger.info("method has been called - getStudentNameNotSync");
         List<String> students = getStudentNames(studentRepository);
 
         for (int i = 0; i < 2; i++) {
@@ -130,6 +131,7 @@ public class StudentService {
     }
 
     public ResponseEntity<Collection<String>> getStudentNameSync() {
+        logger.info("method has been called - getStudentNameSync()");
         List<String> students = getStudentNames(studentRepository);
 
         printNamesOfListSync(students);
@@ -151,6 +153,7 @@ public class StudentService {
     }
 
     public List<String> getStudentNames(StudentRepository studentRepository) {
+        logger.info("method has been called - getStudentName");
         return studentRepository
                 .findAll()
                 .stream()
@@ -159,6 +162,7 @@ public class StudentService {
     }
 
     public void printNamesOfListSync(List<String> students) {
+        logger.info("method has been called - synchronized");
         synchronized (flag) {
             System.out.printf("%d.%s%n",count,students.get(count));
             count++;
